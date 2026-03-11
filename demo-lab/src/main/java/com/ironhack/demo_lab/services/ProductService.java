@@ -1,5 +1,6 @@
 package com.ironhack.demo_lab.services;
 
+import com.ironhack.demo_lab.exception.ResourceNotFoundException;
 import com.ironhack.demo_lab.models.Product;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class ProductService {
     public Product findById(Long id){
         Product product = products.get(id);
         if(product == null){
-            throw new RuntimeException("Not Found");
+            throw new ResourceNotFoundException("Product", id);
         }
         return product;
     }
@@ -57,6 +58,12 @@ public class ProductService {
     }
 
     public List<Product> getProductByPriceRange(Double minPrice, Double maxPrice){
+        if(minPrice < 0){
+            throw new IllegalArgumentException("Minimum price cannot be negative!");
+        }
+        if (maxPrice > Integer.MAX_VALUE){
+            throw new IllegalArgumentException("Maximum price cannot be larger than Integer limit!");
+        }
         return products.values().stream().filter(p -> Double.compare(p.getPrice(), minPrice) == 1 && Double.compare(p.getPrice(), maxPrice) == -1).toList();
     }
 
