@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public class Product {
+    private Long id;
+
     @NotBlank
     @Size(min = 3, message = "Name must be at least 3 characters!")
     private String name;
@@ -26,7 +28,6 @@ public class Product {
     }
 
     public Product() {
-
     }
 
 
@@ -47,6 +48,9 @@ public class Product {
         return category;
     }
 
+    public Long getId() {
+        return id;
+    }
 
     //setters
 
@@ -64,5 +68,9 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

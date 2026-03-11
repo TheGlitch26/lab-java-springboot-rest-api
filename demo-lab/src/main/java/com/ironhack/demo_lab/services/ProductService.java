@@ -11,20 +11,39 @@ import java.util.Map;
 @Service
 public class ProductService {
     private Long nextId = 1L;
+
     Map<Long , Product> products = new HashMap<>();
+
+    public ProductService(){
+        Product product1 = new Product("Bread", 9.99, "Flavor", 10);
+        Product product2 = new Product("HP", 999.99, "Laptop", 5);
+        product1.setId(nextId++);
+        product2.setId(nextId++);
+        products.put(product1.getId(), product1);
+        products.put(product2.getId(), product2);
+    }
+
+    public Product findById(Long id){
+        Product product = products.get(id);
+        if(product == null){
+            throw new RuntimeException("Not Found");
+        }
+        return product;
+    }
 
     public List<Product> findAll(){
         return products.values().stream().toList();
     }
 
-    public Product create(String name, Double price, String category, int quantity){
-        Product product = new Product();
-        product.setName(name);
-        product.setPrice(price);
-        product.setCategory(category);
-        product.setQuantity(quantity);
-        products.put(nextId++, product);
-        return product;
+    public Product create(Product product){
+        Product createdProduct = new Product();
+        createdProduct.setName(product.getName());
+        createdProduct.setQuantity(product.getQuantity());
+        createdProduct.setCategory(product.getCategory());
+        createdProduct.setPrice(product.getPrice());
+        createdProduct.setId(nextId++);
+        products.put(createdProduct.getId(), createdProduct);
+        return createdProduct;
     }
 
     public List<Product> getProductByName(String name){
@@ -34,10 +53,24 @@ public class ProductService {
 
     public List<Product> getProductByCategory(String category){
         return products.values().stream().filter(p ->
-                p.getName().toLowerCase().contains(category.toLowerCase())).toList();
+                p.getCategory().toLowerCase().contains(category.toLowerCase())).toList();
     }
 
     public List<Product> getProductByPriceRange(Double minPrice, Double maxPrice){
         return products.values().stream().filter(p -> Double.compare(p.getPrice(), minPrice) == 1 && Double.compare(p.getPrice(), maxPrice) == -1).toList();
+    }
+
+    public Product update(Long id, Product product){
+        Product foundProduct = findById(id);
+        foundProduct.setName(product.getName());
+        foundProduct.setPrice(product.getPrice());
+        foundProduct.setQuantity(product.getQuantity());
+        foundProduct.setCategory(product.getCategory());
+        return foundProduct;
+    }
+
+    public void delete(Long id){
+        findById(id);
+        products.remove(id);
     }
 }
