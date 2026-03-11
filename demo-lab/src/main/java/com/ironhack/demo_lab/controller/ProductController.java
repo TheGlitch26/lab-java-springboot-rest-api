@@ -24,7 +24,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestHeader(value = "API_Key", required = false) String apiKey, @RequestBody @Valid Product product){
+    public ResponseEntity<Product> createProduct(@RequestHeader(value = "API-Key", required = false) String apiKey, @RequestBody @Valid Product product){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -33,7 +33,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getAllProducts(@RequestHeader(value = "API_Key", required = false) String apiKey){
+    public List<Product> getAllProducts(@RequestHeader(value = "API-Key", required = false) String apiKey){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -42,7 +42,7 @@ public class ProductController {
 
 
     @GetMapping("/search")
-    public List<Product> getProductByName(@RequestHeader(value = "API_Key", required = false) String apiKey, @RequestParam String name){
+    public List<Product> getProductByName(@RequestHeader(value = "API-Key", required = false) String apiKey, @RequestParam String name){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductByName(@RequestHeader(value = "API_Key", required = false) String apiKey, @PathVariable Long id){
+    public Product getProductByName(@RequestHeader(value = "API-Key", required = false) String apiKey, @PathVariable Long id){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -58,7 +58,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@RequestHeader(value = "API_Key", required = false) String apiKey, @PathVariable Long id, @RequestBody Product product){
+    public Product updateProduct(@RequestHeader(value = "API-Key", required = false) String apiKey, @PathVariable Long id, @RequestBody Product product){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -67,7 +67,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@RequestHeader(value = "API_Key", required = false) String apiKey, @PathVariable Long id){
+    public ResponseEntity<Void> deleteProduct(@RequestHeader(value = "API-Key", required = false) String apiKey, @PathVariable Long id){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -77,7 +77,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{category}")
-    public List<Product> getProductByCategory(@RequestHeader(value = "API_Key", required = false) String apiKey, @PathVariable String category){
+    public List<Product> getProductByCategory(@RequestHeader(value = "API-Key", required = false) String apiKey, @PathVariable String category){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
@@ -85,7 +85,7 @@ public class ProductController {
     }
 
     @GetMapping("/price")
-    public List<Product> getProductsByPriceRange(@RequestHeader(value = "API_Key", required = false) String apiKey, @RequestParam Double min, @RequestParam Double max){
+    public List<Product> getProductsByPriceRange(@RequestHeader(value = "API-Key", required = false) String apiKey, @RequestParam Double min, @RequestParam Double max){
         if(apiKey == null || !apiKey.equals(API_Key)){
             throw new InvalidApiKeyException("API_KEY is wrong or missing!");
         }
